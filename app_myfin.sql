@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2022 at 03:42 PM
+-- Generation Time: Jun 08, 2022 at 03:25 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -32,18 +32,18 @@ CREATE TABLE `tb_adminstaff` (
   `email_adminstaff` varchar(100) NOT NULL,
   `password_adminstaff` varchar(100) NOT NULL,
   `role` enum('Admin','Staff') NOT NULL,
-  `nama_adminstaff` varchar(100) NOT NULL
+  `nama_adminstaff` varchar(100) NOT NULL,
+  `deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = false\r\n1 = true'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_adminstaff`
 --
 
-INSERT INTO `tb_adminstaff` (`id_adminstaff`, `email_adminstaff`, `password_adminstaff`, `role`, `nama_adminstaff`) VALUES
-(5, 'zulfi@gmail.com', '$2y$10$hnSv75WiEnuhB1h8Ty5oKeZq5dLcbfySjBI0HM2JKOAWlCGkytNYi', 'Admin', 'Zulfi Masyita'),
-(7, 'viorella@gmail.com', '$2y$10$u9VfyKqQTD4eC.n7Sa7sDeaSHhmeXMzi19Gbos8bu86ZPyt0aAseC', 'Staff', 'Viorella Sunghaiyon'),
-(11, 'haikal12@gmail.com', '$2y$10$/WNsRqJoVpMriTA0j4kjNOcVBlbocMc9aoRtbKQBEslKCgw5rx6SK', 'Staff', 'Haikal Chandra'),
-(15, 'haikal12@gmail.com', '$2y$10$aVM18AqnXDiEKXl3BsL1r.qpPMOubFSZ6HKJn8or.tM0HAIWSt1zK', 'Staff', 'Haikal Chandra');
+INSERT INTO `tb_adminstaff` (`id_adminstaff`, `email_adminstaff`, `password_adminstaff`, `role`, `nama_adminstaff`, `deleted`) VALUES
+(5, 'zulfi@gmail.com', '$2y$10$hnSv75WiEnuhB1h8Ty5oKeZq5dLcbfySjBI0HM2JKOAWlCGkytNYi', 'Admin', 'Zulfi Masyita', 0),
+(7, 'viorella@gmail.com', '$2y$10$u9VfyKqQTD4eC.n7Sa7sDeaSHhmeXMzi19Gbos8bu86ZPyt0aAseC', 'Staff', 'Viorella Sunghaiyon', 0),
+(11, 'haikal12@gmail.com', '$2y$10$/WNsRqJoVpMriTA0j4kjNOcVBlbocMc9aoRtbKQBEslKCgw5rx6SK', 'Staff', 'Haikal Chandra', 0);
 
 -- --------------------------------------------------------
 
@@ -79,17 +79,18 @@ CREATE TABLE `tb_data_nasabah` (
   `swa_file` blob DEFAULT NULL,
   `ava` blob DEFAULT NULL,
   `pertanyaan_keamanan` varchar(100) DEFAULT NULL,
-  `jawaban_keamanan` varchar(100) DEFAULT NULL
+  `jawaban_keamanan` varchar(100) DEFAULT NULL,
+  `deleted` int(11) NOT NULL DEFAULT 0 COMMENT '0 = false\r\n1 = true'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_data_nasabah`
 --
 
-INSERT INTO `tb_data_nasabah` (`id_user`, `email`, `kode_otp`, `pin_user`, `create_at`, `saldo`, `nik`, `nama_lengkap`, `no_hp`, `alamat`, `tgl_lahir`, `kota_lahir`, `ktp_file`, `swa_file`, `ava`, `pertanyaan_keamanan`, `jawaban_keamanan`) VALUES
-(1, 'rendratri@gmail.com', 356744, NULL, '2022-04-18 10:27:46', NULL, '3519155500550002', 'Rendra Tri', '2146786378', '', '2000-07-09', 'Madiun', NULL, NULL, NULL, 'Siapa Nama Gurumu?', 'Joko'),
-(2, 'madu@gmail.com', 111111, 1212, '2022-04-28 13:12:19', NULL, '3519155508880003', 'Madu Zaneta', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(14, 'karina005@gmail.com', 0, NULL, '2022-05-08 06:56:10', NULL, '3519155506570001', 'Karina Dewi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tb_data_nasabah` (`id_user`, `email`, `kode_otp`, `pin_user`, `create_at`, `saldo`, `nik`, `nama_lengkap`, `no_hp`, `alamat`, `tgl_lahir`, `kota_lahir`, `ktp_file`, `swa_file`, `ava`, `pertanyaan_keamanan`, `jawaban_keamanan`, `deleted`) VALUES
+(1, 'rendratri@gmail.com', 356744, NULL, '2022-04-18 10:27:46', NULL, '3519155500550002', 'Rendra Tri', '2146786378', '', '2000-07-09', 'Madiun', NULL, NULL, NULL, 'Siapa Nama Gurumu?', 'Joko', 0),
+(2, 'madu@gmail.com', 111111, 1212, '2022-04-28 13:12:19', NULL, '3519155508880003', 'Madu Zaneta', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(14, 'karina005@gmail.com', 0, NULL, '2022-05-08 06:56:10', NULL, '3519155506570001', 'Karina Dewi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -140,7 +141,7 @@ CREATE TABLE `tb_penarikan_saldo` (
 
 INSERT INTO `tb_penarikan_saldo` (`id_penarikan`, `jml_penarikan`, `bank`, `no_rek`, `nama_pemilik`, `create_at`, `status`, `id_nasabah`, `id_adminstaff`) VALUES
 (1, 1000000, 'BNI', '0316714338', 'Rendra Tri', '2022-05-07 19:05:27', 'diterima', 1, 5),
-(2, 2000000, 'BNI', '0316714338', 'Karina Dewi', '2022-05-19 15:38:45', 'diterima', 14, NULL);
+(2, 2000000, 'BNI', '0316714338', 'Karina Dewi', '2022-05-19 15:38:45', '', 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -151,13 +152,16 @@ INSERT INTO `tb_penarikan_saldo` (`id_penarikan`, `jml_penarikan`, `bank`, `no_r
 CREATE TABLE `tb_pengajuan_kredit` (
   `id_pengajuan_kredit` int(11) NOT NULL,
   `id_nasabah` int(11) NOT NULL,
-  `tanggal_pengajuan` date DEFAULT NULL,
+  `tanggal_pengajuan` varchar(100) DEFAULT NULL,
   `penggunaan` varchar(100) NOT NULL,
   `besar_pengajuan` int(100) NOT NULL,
+  `bsr_pengajuan_diterima` int(200) DEFAULT NULL,
   `tenor` enum('3 bulan','6 bulan','12 bulan') NOT NULL,
   `score` int(4) NOT NULL,
   `tanggal_ubah` date DEFAULT NULL,
+  `tanggal_catatan` date DEFAULT NULL,
   `status` enum('diterima','ditolak','catatan','pending') NOT NULL,
+  `ket_catatan` text DEFAULT NULL,
   `id_adminstaff` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -165,12 +169,12 @@ CREATE TABLE `tb_pengajuan_kredit` (
 -- Dumping data for table `tb_pengajuan_kredit`
 --
 
-INSERT INTO `tb_pengajuan_kredit` (`id_pengajuan_kredit`, `id_nasabah`, `tanggal_pengajuan`, `penggunaan`, `besar_pengajuan`, `tenor`, `score`, `tanggal_ubah`, `status`, `id_adminstaff`) VALUES
-(1, 1, '2022-05-01', 'Beli motor', 7000000, '6 bulan', 81, '2022-05-03', 'diterima', 7),
-(3, 2, '2022-05-07', 'Modal Usaha', 5000000, '6 bulan', 71, '2022-05-09', 'ditolak', NULL),
-(4, 1, '2022-05-03', 'Renovasi Rumah', 10000000, '6 bulan', 83, '2022-05-05', 'diterima', NULL),
-(6, 14, '2022-05-09', 'Biaya Sekolah', 5000000, '3 bulan', 84, '2022-05-19', 'catatan', NULL),
-(8, 2, '2022-05-22', 'Biaya Sekolah', 3000000, '3 bulan', 82, NULL, 'pending', NULL);
+INSERT INTO `tb_pengajuan_kredit` (`id_pengajuan_kredit`, `id_nasabah`, `tanggal_pengajuan`, `penggunaan`, `besar_pengajuan`, `bsr_pengajuan_diterima`, `tenor`, `score`, `tanggal_ubah`, `tanggal_catatan`, `status`, `ket_catatan`, `id_adminstaff`) VALUES
+(1, 1, '2022-05-01', 'Beli motor', 7000000, 7000000, '6 bulan', 81, '2022-05-23', '2022-05-25', 'diterima', '', 7),
+(3, 2, '2022-05-07', 'Modal Usaha', 5000000, 0, '6 bulan', 71, '2022-05-09', NULL, 'ditolak', '', NULL),
+(4, 1, '2022-05-03', 'Renovasi Rumah', 10000000, 5000000, '6 bulan', 83, '2022-06-04', '2022-06-04', 'catatan', 'memperbaiki data pada pengajuan data yang harus dilengkapi dengan alamat', NULL),
+(6, 14, '2022-05-09', 'Biaya Sekolah', 5000000, 5000000, '3 bulan', 84, '2022-06-10', '2022-05-23', 'catatan', 'memperbaiki data pada pengajuan data yang harus dilengkapi dengan alamat', NULL),
+(9, 2, '2022-05-31', 'Biaya Sekolah', 3000000, 0, '3 bulan', 82, NULL, NULL, 'pending', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -320,7 +324,7 @@ ALTER TABLE `tb_penarikan_saldo`
 -- AUTO_INCREMENT for table `tb_pengajuan_kredit`
 --
 ALTER TABLE `tb_pengajuan_kredit`
-  MODIFY `id_pengajuan_kredit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_pengajuan_kredit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_staff`
